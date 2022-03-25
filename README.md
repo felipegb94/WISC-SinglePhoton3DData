@@ -28,6 +28,15 @@ To change the scan that is downloaded edit the `scene_id` variable inside `downl
 
 For more information about the data folder content that is downloaded for each scan see `README_RawDataInfo.md`.
 
+## Code and Scripts
+
+Here are descriptions for the code files provided:
+
+* `read_hydraharp_outfile_t3.py`: Contains functions to read the raw timestamp data. The main function simply reads a single timestamps file, builds a histogram and displays it.
+* `pileup_correction`: Pile-up correction algorithms for timestamp data obtained in synchronous and in free running mode. The free running mode does not change the histograms too much. For the synchronous mode you need to make sure that the histogram is correctly shifted (0th time bin is actually the early time bins).
+* `scan_data_utils.py` and `research_utils/`: Some utility functions used by the scripts here.
+
+
 ## Citation and Reference
 
 The code and data in this repository comes from 3 different projects.

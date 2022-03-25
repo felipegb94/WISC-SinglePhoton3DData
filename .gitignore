@@ -1,7 +1,7 @@
 ##
 
-scan_data_scripts/
-data/
+scan_data_scripts_old/
+data_raw_timestamps/
 
 ## Auto-generated
 # Byte-compiled / optimized / DLL files

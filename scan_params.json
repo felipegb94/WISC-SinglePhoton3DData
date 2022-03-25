@@ -2,7 +2,6 @@
     "laser_rep_freq": 10e6,
     "dead_time": 50e3, 
     "min_tbin_size": 8,
-    "scan_data_base_dirpath": "/home/felipe/datasets/splidar-data-iccv2019/scanDataT3/data",
     "scene_ids": [
         "20190209_deer_high_mu/free"
         , "20190209_deer_high_mu/ext"

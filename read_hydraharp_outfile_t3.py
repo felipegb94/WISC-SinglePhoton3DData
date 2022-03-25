@@ -3,6 +3,9 @@
 Created on Thu Dec 21 10:26:46 2017
 
 @author: compoptics, modified by felipe 08-26-2021
+
+Reads a single photon timestamp data file (t3mode_*.out file), i.e., a single point of the 3D stances
+
 """
 #### Standard Library Imports
 import os
@@ -17,11 +20,11 @@ from IPython.core import debugger
 breakpoint = debugger.set_trace
 
 #### Local imports
-from scan_data_scripts.scan_data_utils import *
-from scan_data_scripts.pileup_correction import *
 from research_utils.plot_utils import *
 from research_utils.timer import Timer
 from research_utils.io_ops import load_json
+from scan_data_utils import *
+from pileup_correction import *
 
 DEBUG = False
 
@@ -230,13 +233,14 @@ def calc_hist_shift(fname, hist_tbin_size):
 
 if __name__=='__main__':
 	## Load parameters shared by all
-	scan_data_params = load_json('scan_data_scripts/scan_params.json')
+	io_dirpaths = load_json('io_dirpaths.json')
+	scan_data_params = load_json('scan_params.json')
 	
-	base_dirpath = scan_data_params['scan_data_base_dirpath']
+	data_base_dirpath = io_dirpaths['timestamp_data_base_dirpath']
 	## Scene IDs:
 	scene_id = '20190207_face_scanning_low_mu/free'
 	fname = 't3mode_0_000000_10295.out' # Nose
-	fname = 't3mode_0_000000_14467.out' # Background
+	# fname = 't3mode_0_000000_14467.out' # Background
 	# fname = 't3mode_0_000000_19723.out' # Upper rgiht cheeck
 	# fname = 't3mode_0_000000_21345.out' # Right ear
 	# scene_id = '20190207_face_scanning_low_mu/ground_truth'
@@ -250,20 +254,20 @@ if __name__=='__main__':
 	# scene_id = '20190205_face_scanning/ext_opt_filtering'
 	# fname = 't3mode_0_000000_5757.out'
 
-	# Read file 
-	dirpath = os.path.join(base_dirpath, scene_id)
+	## Read file 
+	dirpath = os.path.join(data_base_dirpath, scene_id)
 	fpath = os.path.join(dirpath, fname)
 
-	# fname = 'E:/scanDataT3/data/t3mode_1_048484.out'
+	## Timestamps and their corresponding laser pulse cycle when it was captured
 	sync_vec, dtime_vec = read_hydraharp_outfile_t3(fpath)
 
-	# discard timestamps to make things faster
+	## discard timestamps to make things faster
 	max_n_tstamps = int(1e8)
 	abs_max_n_tstamps = dtime_vec.size
 	max_n_tstamps = np.min([max_n_tstamps, dtime_vec.size])
 	(dtime_vec, sync_vec) = (dtime_vec[0:max_n_tstamps], sync_vec[0:max_n_tstamps]) 
 
-	# Calc Parameters for Coates Estimator
+	## Calc Parameters for Coates Estimator
 	n_laser_cycles = sync_vec.max()
 	n_empty_laser_cycles = calc_n_empty_laser_cycles(sync_vec)
 	laser_rep_freq = scan_data_params['laser_rep_freq'] # most data acquisitions were done with a 10MHz laser rep freq
@@ -281,7 +285,8 @@ if __name__=='__main__':
 	n_hist_bins = counts.size
 	# if('calib' in fname): roll_amount = 0
 	# else: roll_amount = calc_hist_shift(fname, hist_tbin_size)
-	roll_amount=0
+	roll_amount=-21400
+	# roll_amount=0
 	counts = np.roll(counts, int(roll_amount))
 
 	## Verify that the number of laser cycles still matches n_laser_cycles gotten from sync_vec
@@ -290,57 +295,38 @@ if __name__=='__main__':
 	## correct histogram (Coates estimate)
 	dead_time = scan_data_params['dead_time'] # dead time in picoseconds
 	if('free' in scene_id):
-		corrected_counts = coates_est_free_running(counts, laser_rep_period, hist_tbin_size, dead_time)
+		corrected_counts = coates_est_free_running(counts, laser_rep_period, hist_tbin_size, dead_time, n_laser_cycles, hist_tbin_factor=hist_tbin_factor)
 	elif(('ground_truth' in scene_id) or ('ext' in scene_id)):
 		corrected_counts = coates_correction_sync_mode(counts, n_laser_cycles)
 	else:
 		corrected_counts = counts
-	# some useful calcs
-	max_n_photons_per_cycle = int(np.ceil(max_tbin / dead_time))
-	dead_time_bins = int(np.floor(dead_time / hist_tbin_size))
-	# Max number of photons that a bin can have detected. This is equal to # of laser cycles. If we downsampled histogram then it will be n_laser_cycles*hist_tbin_factor
-	max_photons_per_bin = int(n_laser_cycles * hist_tbin_factor)*max_n_photons_per_cycle
 
 	print("Hist Params:")
-	print("   - n_bins = {}".format(bins.shape))
-	print("   - n_counts = {}".format(counts.sum()))
-	print("   - n_timestamps_used = {}".format(dtime_vec.shape))
-	print("   - n_timestamps_avail = {}".format(abs_max_n_tstamps))
-	print("   - MIN timestamp in file = {}".format(min_tbin_size*np.min(dtime_vec)))
-	print("   - MAX timestamp in file = {}".format(min_tbin_size*np.max(dtime_vec)))
+	print("	- n_bins = {}".format(bins.shape))
+	print("	- n_counts = {}".format(counts.sum()))
+	print("	- n_timestamps_used = {}".format(dtime_vec.shape))
+	print("	- n_timestamps_avail = {}".format(abs_max_n_tstamps))
+	print("	- MIN timestamp in file (ps) = {}".format(min_tbin_size*np.min(dtime_vec)))
+	print("	- MAX timestamp in file (ps) = {}".format(min_tbin_size*np.max(dtime_vec)))
 	
 	# Check if all laser pulses counter are unique
 	# If all the pulses are unique, it usually means that we were operated in synchronous mode (ext triggering with laser).
 	u, c = np.unique(sync_vec, return_counts=True)
 	dup = u[c>1]
-	if(dup.size > 0): print('    - sync_vec HAS duplicate entries')
-	else: print('   - sync_vec DOES NOT HAVE duplicate entries')
-
-	results_dirpath = load_json('io_dirpaths.json')['results_dirpath']
-	results_dirpath = os.path.join(results_dirpath, 'real_data_results/per_pixel')
+	if(dup.size > 0): print("	- sync_vec HAS duplicate entries, so multiple photons were detected within one laser period")
+	else: print("	- sync_vec DOES NOT HAVE duplicate entries")
 
 	# Plot
-	# plt.clf()
-	plt.plot(bins, counts / n_laser_cycles, alpha=0.75, label='Uncorrected: '+fname)
-	plt.plot(bins, corrected_counts, alpha=0.75, label='Corrected: '+fname)
-	# plt.plot(bins, counts , alpha=0.75, label=fname)
-	plt.legend(fontsize=16)
+	plt.clf()
+	plt.plot(bins, counts / n_laser_cycles, alpha=0.75, label='Uncorrected: ' + fname)
+	plt.plot(bins, corrected_counts, alpha=0.4, label='Corrected: ' + fname)
+	plt.title("Scene: {}".format(scene_id))
+	plt.legend(fontsize=12)
 	plt.xlim([0,max_tbin])
 	plt.pause(0.1)
-	out_fname = '{}_{}'.format(scene_id.replace('/','--'),fname.replace('.out',''))
-	save_currfig_png(results_dirpath, out_fname)
+	# out_fname = '{}_{}'.format(scene_id.replace('/','--'),fname.replace('.out',''))
+	# save_currfig_png(results_dirpath, out_fname)
 	plt.pause(0.1)
 
-	# plt.xlim([34500,47000])
-	# out_fname = '{}_{}_zoom1'.format(scene_id.replace('/','--'),fname.replace('.out',''))
-	# save_currfig_png(results_dirpath, out_fname)
 
-	# plt.xlim([58000,80000])
-	# out_fname = '{}_{}_zoom2'.format(scene_id.replace('/','--'),fname.replace('.out',''))
-	# save_currfig_png(results_dirpath, out_fname)
-
-	# plt.xlim([0,max_tbin])
-	# plt.ylim([0,0.0008])
-	# out_fname = '{}_{}_zoom3'.format(scene_id.replace('/','--'),fname.replace('.out',''))
-	# save_currfig_png(results_dirpath, out_fname)
 

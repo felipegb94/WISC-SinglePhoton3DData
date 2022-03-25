@@ -37,11 +37,11 @@ if __name__=='__main__':
     # scene_id = "20190209_deer_high_mu"
     ## Scans from optimal filterins
     scene_id = "20181105_face"
-    scene_id = "20181105_tajmahal"
+    scene_id = "20181112_blocks"
 
     ## Get dirpath where to download the data
     io_dirpaths = io_ops.load_json('io_dirpaths.json')
-    data_base_dirpath = io_dirpaths['data_base_dirpath']
+    data_base_dirpath = io_dirpaths['timestamp_data_base_dirpath']
     # Make folder to save data in. 
     os.makedirs(data_base_dirpath, exist_ok=True)
 
