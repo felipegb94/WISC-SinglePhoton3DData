@@ -1,0 +1,3 @@
+[submodule "fgb_research_utils"]
+	path = fgb_research_utils
+	url = git@github.com:felipegb94/fgb_research_utils.git

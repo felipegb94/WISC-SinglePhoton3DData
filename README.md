@@ -2,6 +2,15 @@
 
 Raw single-photon timestamp data processing scripts for data obtained from a Hydrahard TCSPC. The data was captured in an experimental scanning single-photon LiDAR prototype built at UW-Madison by the [Computational Optics](http://compoptics.wisc.edu/) and [WISION](https://wisionlab.cs.wisc.edu/) groups.
 
+## Setup Python Environment
+
+The code is tested on Python 3.6. You can setup a conda environment using the `environment.yml` file here or follow these steps:
+
+1. Create environment: `conda create --name SP3DDEnv python=3.6`
+2. Install packages: `conda install numpy scipy matplotlib ipython gdown`
+
+## Download data scripts
+
 ## Citation and Reference
 
 The code and data in this repository comes from 3 different projects.
