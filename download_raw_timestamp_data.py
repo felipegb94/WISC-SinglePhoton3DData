@@ -1,9 +1,11 @@
+'''
+    This script downloads the raw timestamp data files for a given scenes 3D scan.
+    The raw data folders can be 1 to 9GB in size.
+'''
+
 #### Standard Library Imports
-import io
 import gdown
 import rarfile
-import subprocess
-import urllib.request
 import os
 
 #### Library imports
@@ -30,8 +32,12 @@ if __name__=='__main__':
 
     ## Set scene ID that we want to download
     # See io_dirpaths.json for all options
+    ## Scans from async shifting paper
     scene_id = "20190207_face_scanning_low_mu"
     # scene_id = "20190209_deer_high_mu"
+    ## Scans from optimal filterins
+    scene_id = "20181105_face"
+    scene_id = "20181105_tajmahal"
 
     ## Get dirpath where to download the data
     io_dirpaths = io_ops.load_json('io_dirpaths.json')
