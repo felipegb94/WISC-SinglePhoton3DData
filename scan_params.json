@@ -37,19 +37,35 @@
             "n_cols_fullres": 116
             , "pulse_len": 480 
             , "second_pulse_offset": 1100
-            },
+            , "global_temporal_shift": 0
+        },
         "20190207_face_scanning_low_mu/ground_truth": {
             "n_rows_fullres": 204, 
             "n_cols_fullres": 116
             , "pulse_len": 850 
             , "second_pulse_offset": 1100
+            , "global_temporal_shift": 0
+        },
+        "20190207_face_scanning_low_mu/ext_opt_filtering": {
+            "n_rows_fullres": 204, 
+            "n_cols_fullres": 116
+            , "pulse_len": 480 
+            , "second_pulse_offset": 1100
+            , "global_temporal_shift": -21400
+        },
+        "20190207_face_scanning_low_mu/ext_5%": {
+            "n_rows_fullres": 204, 
+            "n_cols_fullres": 116
+            , "pulse_len": 480 
+            , "second_pulse_offset": 1100
+            , "global_temporal_shift": -21400
         },
         "20190209_deer_high_mu/free": {
             "n_rows_fullres": 174, 
             "n_cols_fullres": 154
             , "pulse_len": 480 
             , "second_pulse_offset": 1100
-        } 
+        }
     },
     "fov_major_axis": 40
 }

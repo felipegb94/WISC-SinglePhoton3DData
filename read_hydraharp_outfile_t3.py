@@ -283,10 +283,13 @@ if __name__=='__main__':
 	hist_tbin_size = min_tbin_size*hist_tbin_factor # increase size of time bin to make histogramming faster
 	(counts, bin_edges, bins) = timestamps2histogram(dtime_vec, max_tbin=max_tbin, min_tbin_size=min_tbin_size, hist_tbin_factor=hist_tbin_factor)
 	n_hist_bins = counts.size
+
+	## Apply global shift to histograms.
 	# if('calib' in fname): roll_amount = 0
 	# else: roll_amount = calc_hist_shift(fname, hist_tbin_size)
-	roll_amount=-21400
-	# roll_amount=0
+	roll_amount=0
+	if(scene_id == '20190207_face_scanning_low_mu/ext_opt_filtering'):
+		roll_amount=-21400
 	counts = np.roll(counts, int(roll_amount))
 
 	## Verify that the number of laser cycles still matches n_laser_cycles gotten from sync_vec
