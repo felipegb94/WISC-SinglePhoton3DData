@@ -1,3 +1,7 @@
 {
     "data_base_dirpath": "./data"
+    , "gdrive_urls": {
+        "async_face_scan": "https://drive.google.com/drive/folders/1vJsZxGgXxh1s-wLIpSIcFg0hPx8pDJea"
+        , "async_face_scan2": "https://drive.google.com/file/d/1uOcmlESquy8ivI8iDi7SgpWKjKvOVhp4/view?usp=sharing"
+    }
 }
