@@ -22,11 +22,11 @@ The code is tested on Python 3.6. You can setup a conda environment using the `e
 Edit  `io_dirpaths.json` file to set the `data_base_dirpath` variable to the directory where you want your data to be downloaded. By default it will download to `./data`.
 ## Raw Timestamp Data
 
+**Note:** Instead of the raw timestamp data you can download the raw histogram images obtained by loading the timestamps and assembling them into a single 3D histogram image. If you prefer to directly deal with the histogram images skip to the next section
+
 You can download the raw timestamp data using the `download_raw_timestamp_data.py` script. This script only downloads a single scan at a time. Each scan file is between 1-8GB in size. To change the scan that is downloaded edit the `scene_id` variable inside `download_raw_timestamp_data.py`.
 
 For more information about the data folder content that is downloaded for each scan see `README_RawDataInfo.md`.
-
-Alternatively, instead of the raw timestamp data you can download the raw histogram images obtained by loading the timestamps and assembling them into a single 3D histogram image. If you prefer to directly deal with the histogram images skip to the next section
 
 ### Computing Histograms from Raw Timestamp Data
 
