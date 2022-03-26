@@ -42,8 +42,9 @@ if __name__=='__main__':
     # scene_id = '20181112_blocks/high_flux'
     # scene_id = '20181112_blocks/med_flux'
     # scene_id = '20181112_blocks/low_flux'
-    scene_id = '20181105_face/low_flux'
+    # scene_id = '20181105_face/low_flux'
     # scene_id = '20181105_face/opt_flux'
+    # scene_id = '20181105_tajmahal'
     assert(scene_id in scan_data_params['scene_ids']), "{} not in scene_ids".format(scene_id)
     
     ## Get dirpaths

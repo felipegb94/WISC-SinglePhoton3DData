@@ -39,15 +39,15 @@ if __name__=='__main__':
 
     ## Load processed scene:
     ## Set scene that will be processed 
-    scene_id = '20190209_deer_high_mu/free'
-    # scene_id = '20190209_deer_high_mu/det'
-    # scene_id = '20190209_deer_high_mu/ext'
-    # scene_id = '20190209_deer_high_mu/ext_5%'
-    # scene_id = '20190207_face_scanning_low_mu/free'
+    scene_id = '20190207_face_scanning_low_mu/free'
     # scene_id = '20190207_face_scanning_low_mu/det'
     # scene_id = '20190207_face_scanning_low_mu/ground_truth'
     # scene_id = '20190207_face_scanning_low_mu/ext_opt_filtering'
     # scene_id = '20190207_face_scanning_low_mu/ext_5%'
+    # scene_id = '20190209_deer_high_mu/free'
+    # scene_id = '20190209_deer_high_mu/det'
+    # scene_id = '20190209_deer_high_mu/ext'
+    # scene_id = '20190209_deer_high_mu/ext_5%'
     assert(scene_id in scan_data_params['scene_ids']), "{} not in scene_ids".format(scene_id)
     hist_dirpath = os.path.join(hist_img_base_dirpath, scene_id)
 
