@@ -2,6 +2,20 @@
 
 Raw single-photon timestamp data processing scripts for data obtained from a Hydrahard TCSPC. The data was captured in an experimental scanning single-photon LiDAR prototype built at UW-Madison by the [Computational Optics](http://compoptics.wisc.edu/) and [WISION](https://wisionlab.cs.wisc.edu/) groups.
 
+- [WISC-SinglePhoton3DData](#wisc-singlephoton3ddata)
+  - [Setup](#setup)
+    - [Step 1: Clone repository](#step-1-clone-repository)
+    - [Step 2: Setup Python Environment](#step-2-setup-python-environment)
+    - [Step 3: Edit Variables in `io_dirpath.json`](#step-3-edit-variables-in-io_dirpathjson)
+  - [Raw Timestamp Data](#raw-timestamp-data)
+    - [Computing Histograms from Raw Timestamp Data](#computing-histograms-from-raw-timestamp-data)
+  - [Raw 3D Histogram Image Data](#raw-3d-histogram-image-data)
+    - [Pre-processing Raw Histograms](#pre-processing-raw-histograms)
+    - [Extracting IRF for Depth Estimation](#extracting-irf-for-depth-estimation)
+    - [Estimating depths](#estimating-depths)
+  - [Additional Code and Scripts](#additional-code-and-scripts)
+  - [Citation and Reference](#citation-and-reference)
+
 ## Setup 
 ### Step 1: Clone repository
 
