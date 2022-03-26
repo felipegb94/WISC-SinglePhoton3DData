@@ -48,6 +48,9 @@ if __name__=='__main__':
     # scene_id = '20190209_deer_high_mu/det'
     # scene_id = '20190209_deer_high_mu/ext'
     # scene_id = '20190209_deer_high_mu/ext_5%'
+    scene_id = '20181105_face/low_flux'
+    scene_id = '20181105_face/opt_flux'
+
     assert(scene_id in scan_data_params['scene_ids']), "{} not in scene_ids".format(scene_id)
     hist_dirpath = os.path.join(hist_img_base_dirpath, scene_id)
 
@@ -64,6 +67,7 @@ if __name__=='__main__':
     hist_img_fpath = os.path.join(hist_dirpath, hist_img_fname)
 
     ## Load histogram
+    assert(os.path.exists(hist_img_fpath)), "{} does not exist. Make sure to run preprocess_raw_hist_img.py first".format(hist_img_fpath)
     hist_img = np.load(hist_img_fpath)
     (nr,nc,nt) = hist_img.shape
     (tbins, tbin_edges) = get_hist_bins(hist_img_tau, irf_tres)
