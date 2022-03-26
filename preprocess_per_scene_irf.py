@@ -1,6 +1,11 @@
 '''
     This script uses a high SNR pixel from a pre-processed histogram image and extracts the IRF of that scene
     The data collected by this setup has a bi-modal IRF due to lens inter-reflections which explains the two peaks.
+
+    NOTE: This script may not work well with data acquired in synchronous mode that has pile-up. 
+    You may need to correct for pile-up first
+
+    NOTE: The ext_5% when denoised end up with 0 photons everywhere so we need to reduce the amount of denoising
 '''
 
 #### Standard Library Imports
@@ -33,9 +38,16 @@ if __name__=='__main__':
     hist_img_base_dirpath = io_dirpaths["preprocessed_hist_data_base_dirpath"]
 
     ## Load processed scene:
-    scene_id = '20190207_face_scanning_low_mu/free'
-    # scene_id = '20190207_face_scanning_low_mu/ground_truth'
+    ## Set scene that will be processed 
     scene_id = '20190209_deer_high_mu/free'
+    # scene_id = '20190209_deer_high_mu/det'
+    # scene_id = '20190209_deer_high_mu/ext'
+    # scene_id = '20190209_deer_high_mu/ext_5%'
+    # scene_id = '20190207_face_scanning_low_mu/free'
+    # scene_id = '20190207_face_scanning_low_mu/det'
+    # scene_id = '20190207_face_scanning_low_mu/ground_truth'
+    # scene_id = '20190207_face_scanning_low_mu/ext_opt_filtering'
+    # scene_id = '20190207_face_scanning_low_mu/ext_5%'
     assert(scene_id in scan_data_params['scene_ids']), "{} not in scene_ids".format(scene_id)
     hist_dirpath = os.path.join(hist_img_base_dirpath, scene_id)
 
@@ -57,18 +69,18 @@ if __name__=='__main__':
     (tbins, tbin_edges) = get_hist_bins(hist_img_tau, irf_tres)
 
     ## Apply denoising
-    d_hist_img = gaussian_filter(hist_img, sigma=1, mode='wrap', truncate=3)
+    if('ext_5%' in scene_id):
+        d_hist_img = gaussian_filter(hist_img, sigma=0.1, mode='wrap', truncate=3)
+    else:
+        d_hist_img = gaussian_filter(hist_img, sigma=1, mode='wrap', truncate=3)
     min_signal_threshold=1.0
 
     if('20190207_face_scanning_low_mu' in scene_id):
         (r,c) = (109, 50)
-        min_signal_threshold=0.5
     elif('20190209_deer_high_mu' in scene_id):
         (r,c) = (58, 60)
-        min_signal_threshold=1.0
     else:
         (r,c) = (nr//2, nc//2)
-        min_signal_threshold=1.0
 
     (r_max,c_max) = np.unravel_index(np.argmax(hist_img.sum(axis=-1)), (nr,nc))
     ## extract selected irf and center it

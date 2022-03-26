@@ -54,15 +54,18 @@ if __name__=='__main__':
     # scene_id = '20190209_deer_high_mu/det'
     # scene_id = '20190209_deer_high_mu/ext'
     # scene_id = '20190209_deer_high_mu/ext_5%'
-    scene_id = '20181112_blocks/extreme_flux'
-    # scene_id = '20181112_blocks/high_flux'
-    # scene_id = '20181112_blocks/med_flux'
-    # scene_id = '20181112_blocks/low_flux'
-    # scene_id = '20181105_tajmahal'
-    # scene_id = '20190207_face_scanning_low_mu/free'
+    scene_id = '20190207_face_scanning_low_mu/free'
+    # scene_id = '20190207_face_scanning_low_mu/det'
     # scene_id = '20190207_face_scanning_low_mu/ground_truth'
     # scene_id = '20190207_face_scanning_low_mu/ext_opt_filtering'
     # scene_id = '20190207_face_scanning_low_mu/ext_5%'
+    # scene_id = '20181112_blocks/extreme_flux'
+    # scene_id = '20181112_blocks/high_flux'
+    # scene_id = '20181112_blocks/med_flux'
+    # scene_id = '20181112_blocks/low_flux'
+    # scene_id = '20181105_face/low_flux'
+    # scene_id = '20181105_face/opt_flux'
+    # scene_id = '20181105_tajmahal'
     assert(scene_id in scan_data_params['scene_ids']), "{} not in scene_ids".format(scene_id)
     dirpath = os.path.join(timestamp_data_base_dirpath, scene_id)
     hist_dirpath = os.path.join(hist_data_base_dirpath, scene_id)
@@ -158,23 +161,6 @@ if __name__=='__main__':
         np.save(os.path.join(hist_dirpath, 'n-laser-cycles-img_{}.npy'.format(raw_hist_img_dims)), n_laser_cycles_img)
         np.save(os.path.join(hist_dirpath, 'n-empty-laser-cycles-img_{}.npy'.format(raw_hist_img_dims)), n_empty_laser_cycles_img)
     
-    # ## Histogram pre-processing parameters
-    # hist_start_time = scan_data_params['hist_preprocessing_params']['hist_start_time'] # in ps. used to crop hist
-    # hist_end_time = scan_data_params['hist_preprocessing_params']['hist_end_time'] # in ps. used to crop hist
-    # hist_shift_time = scan_data_params['hist_preprocessing_params']['hist_shift_time'] # circshift histograms forward so they are not close to boundary
-    # hist_start_bin = time2bin(hist_start_time, hist_tbin_size)
-    # hist_end_bin = time2bin(hist_end_time, hist_tbin_size)
-    # hist_shift_bin = time2bin(hist_shift_time, hist_tbin_size)
-    # hist_img_tau = hist_end_time - hist_start_time
-
-    # ## Pre-process and save hist image
-    # # Crop beginning and end to remove system inter-reflections
-    # hist_img = raw_hist_img[..., hist_start_bin:hist_end_bin]
-    # # Circ shift to move peaks away from 0th bin
-    # hist_img = np.roll(hist_img, hist_shift_bin)
-    # hist_img_fname = get_hist_img_fname(nr, nc, int(hist_tbin_size), hist_img_tau)
-    # np.save(os.path.join(hist_dirpath, hist_img_fname), hist_img)
-
     ## Save intensity image
     plt.clf()
     plt.imshow(raw_hist_img.sum(axis=-1))

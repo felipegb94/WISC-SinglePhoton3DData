@@ -1,13 +1,15 @@
 '''
-	Base class for temporal coding schemes
+@author: Felipe Gutierrez-Barragan
+
+Depth estimations for coarse (gated) and full-resolution histograms
+
 '''
 ## Standard Library Imports
 from abc import ABC, abstractmethod
 
 ## Library Imports
 import numpy as np
-from scipy import signal, interpolate
-from scipy.special import softmax
+from scipy import interpolate
 from IPython.core import debugger
 breakpoint = debugger.set_trace
 
@@ -146,8 +148,6 @@ class Coding(ABC):
 	def maxgauss_peak_decoding(self, c_vec, gauss_sigma, rec_algo_id='linear', **kwargs):
 		lookup = self.reconstruction(c_vec, rec_algo_id, **kwargs)
 		return signalproc_ops.max_gaussian_center_of_mass_mle(lookup, sigma_tbins = gauss_sigma)
-
-
 
 class GatedCoding(Coding):
 	'''

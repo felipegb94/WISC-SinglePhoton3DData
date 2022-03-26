@@ -4,7 +4,7 @@
     * Crop earlier and later time bins in histogram (some of them have undesired reflections)
     * Shift histogram
 
-    Make sure to set the hist_preprocessing_params inside scan_params.json correctly. Or tune them until you get what you need.
+    NOTE: Make sure to set the hist_preprocessing_params inside scan_params.json correctly. Or tune them until you get what you need.
     The default parameters in the scan_params.json work well for 20190209_deer_high_mu and 20190207_face_scanning_low_mu
 '''
 #### Standard Library Imports
@@ -30,14 +30,20 @@ if __name__=='__main__':
 
     ## Set scene that will be processed 
     scene_id = '20190209_deer_high_mu/free'
+    # scene_id = '20190209_deer_high_mu/det'
     # scene_id = '20190209_deer_high_mu/ext'
     # scene_id = '20190209_deer_high_mu/ext_5%'
-    # scene_id = '20181112_blocks/extreme_flux'
-    # scene_id = '20181105_tajmahal'
     # scene_id = '20190207_face_scanning_low_mu/free'
+    # scene_id = '20190207_face_scanning_low_mu/det'
     # scene_id = '20190207_face_scanning_low_mu/ground_truth'
     # scene_id = '20190207_face_scanning_low_mu/ext_opt_filtering'
     # scene_id = '20190207_face_scanning_low_mu/ext_5%'
+    # scene_id = '20181112_blocks/extreme_flux'
+    # scene_id = '20181112_blocks/high_flux'
+    # scene_id = '20181112_blocks/med_flux'
+    # scene_id = '20181112_blocks/low_flux'
+    scene_id = '20181105_face/low_flux'
+    # scene_id = '20181105_face/opt_flux'
     assert(scene_id in scan_data_params['scene_ids']), "{} not in scene_ids".format(scene_id)
     
     ## Get dirpaths
