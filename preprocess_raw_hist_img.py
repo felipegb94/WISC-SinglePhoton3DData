@@ -3,6 +3,9 @@
     Preprocessing Steps:
     * Crop earlier and later time bins in histogram (some of them have undesired reflections)
     * Shift histogram
+
+    Make sure to set the hist_preprocessing_params inside scan_params.json correctly. Or tune them until you get what you need.
+    The default parameters in the scan_params.json work well for 20190209_deer_high_mu and 20190207_face_scanning_low_mu
 '''
 #### Standard Library Imports
 import os

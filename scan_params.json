@@ -30,8 +30,8 @@
     },
     "scene_params": {
         "default": {
-            "n_rows_fullres": 174,
-            "n_cols_fullres": 154,
+            "n_rows_fullres": 123,
+            "n_cols_fullres": 183,
             "pulse_len": 480,
             "second_pulse_offset": 1100,
             "global_temporal_shift": 0
@@ -94,6 +94,34 @@
         "20190209_deer_high_mu/det": {
             "n_rows_fullres": 174,
             "n_cols_fullres": 154,
+            "pulse_len": 480,
+            "second_pulse_offset": 1100,
+            "global_temporal_shift": 0
+        },
+        "20181112_blocks/low_flux": {
+            "n_rows_fullres": 123,
+            "n_cols_fullres": 183,
+            "pulse_len": 480,
+            "second_pulse_offset": 1100,
+            "global_temporal_shift": 0
+        },
+        "20181112_blocks/med_flux": {
+            "n_rows_fullres": 123,
+            "n_cols_fullres": 183,
+            "pulse_len": 480,
+            "second_pulse_offset": 1100,
+            "global_temporal_shift": 0
+        },
+        "20181112_blocks/high_flux": {
+            "n_rows_fullres": 123,
+            "n_cols_fullres": 183,
+            "pulse_len": 480,
+            "second_pulse_offset": 1100,
+            "global_temporal_shift": 0
+        },
+        "20181112_blocks/extreme_flux": {
+            "n_rows_fullres": 123,
+            "n_cols_fullres": 183,
             "pulse_len": 480,
             "second_pulse_offset": 1100,
             "global_temporal_shift": 0

@@ -149,3 +149,30 @@ def calc_n_empty_laser_cycles(sync_vec):
 	n_nonempty_laser_cycles = u.size
 	assert(max_laser_cycles >= n_nonempty_laser_cycles), "something is wrong with sync_vec"
 	return max_laser_cycles - n_nonempty_laser_cycles
+
+def linearize_phase(phase):
+	# If phase  < 0 then we need to add 2pi.
+	corrected_phase = phase + (2*np.pi*(phase < 0))
+	return corrected_phase
+	
+def phase2depth(phase, repetition_tau):
+	return time2depth(phase2time(phase, repetition_tau))
+
+def phase2time(phase, repetition_tau):
+	'''
+		Assume phase is computed with np.atan2
+	'''
+	# If phase  < 0 then we need to add 2pi.
+	corrected_phase = linearize_phase(phase)
+	return (corrected_phase*repetition_tau / 2*np.pi )
+
+SPEED_OF_LIGHT = 3e8
+
+def time2depth(time):
+	return (SPEED_OF_LIGHT * time) / 2.
+
+def freq2depth(freq):
+	return (SPEED_OF_LIGHT * (1./freq)) / 2.
+
+def depth2time(depth):
+	return (2*depth /  SPEED_OF_LIGHT)
