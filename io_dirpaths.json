@@ -1,6 +1,7 @@
 {
     "timestamp_data_base_dirpath": "./data_raw_timestamps"
     , "hist_data_base_dirpath": "./data_raw_histograms"
+    , "preprocessed_hist_data_base_dirpath": "./preprocessed_hist_imgs"
     , "system_irfs_dirpath": "./system_irfs"
     , "gdrive_urls": {
         "20190207_face_scanning_low_mu": "https://drive.google.com/file/d/1qpKLH1NVIikRzZpVLmflzsjjI7dENam4/view?usp=sharing"

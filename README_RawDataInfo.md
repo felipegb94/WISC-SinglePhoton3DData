@@ -20,3 +20,4 @@ There are scans from Gupta et al., CVPR 2019 and from Gupta et al., ICCV 2019. A
 * `20190209_deer_high_mu`: Scan of a reindeer wooden structure.
 
 ### Raw data from scans from Gupta et al., ICCV 2019
+

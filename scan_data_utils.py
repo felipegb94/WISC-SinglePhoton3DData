@@ -93,25 +93,25 @@ def fit_irf(irf):
 	f = interp1d(ext_x_fullres, ext_irf, axis=-1, kind='cubic')
 	return f
 
-def get_irf(n, tlen, tres=8, is_unimodal=False):
-	'''
-		Load IRF data stored for a particular histogram length (tlen)
-		Fit a curve to the data, and then re-sample it at the desired resolution (n)
-		PARAMETERS:
-			* n = desired resolution of irf
-			* tlen = length of irf in picoseconds
-			* tres = time resolution of irf data
-		NOTE: The IRF data is usually saved at the lowest tres possible (8ps)
-	'''
-	irf_data_fname = get_irf_fname(tres, tlen, is_unimodal)
-	irf_data_fpath = os.path.join(irf_dirpath, irf_data_fname)
-	assert(os.path.exists(irf_data_fpath)), "irf does not exist. make sure to run preprocess_irf.py for this hist len first"
-	irf_data = np.load(irf_data_fpath)
-	irf_f = fit_irf(irf_data)
-	x_fullres = np.arange(0, n)*(1./n)
-	irf = irf_f(x_fullres)
-	irf[irf < 1e-8] = 0
-	return irf
+# def get_irf(n, tlen, tres=8, is_unimodal=False):
+# 	'''
+# 		Load IRF data stored for a particular histogram length (tlen)
+# 		Fit a curve to the data, and then re-sample it at the desired resolution (n)
+# 		PARAMETERS:
+# 			* n = desired resolution of irf
+# 			* tlen = length of irf in picoseconds
+# 			* tres = time resolution of irf data
+# 		NOTE: The IRF data is usually saved at the lowest tres possible (8ps)
+# 	'''
+# 	irf_data_fname = get_irf_fname(tres, tlen, is_unimodal)
+# 	irf_data_fpath = os.path.join(irf_dirpath, irf_data_fname)
+# 	assert(os.path.exists(irf_data_fpath)), "irf does not exist. make sure to run preprocess_irf.py for this hist len first"
+# 	irf_data = np.load(irf_data_fpath)
+# 	irf_f = fit_irf(irf_data)
+# 	x_fullres = np.arange(0, n)*(1./n)
+# 	irf = irf_f(x_fullres)
+# 	irf[irf < 1e-8] = 0
+# 	return irf
 
 def get_scene_irf(scene_id, n, tlen, tres=8, is_unimodal=False):
 	'''

@@ -2,6 +2,9 @@
 
 scan_data_scripts_old/
 data_raw_timestamps/
+data_raw_histograms/
+preprocessed_hist_imgs/
+system_irf/
 
 ## Auto-generated
 # Byte-compiled / optimized / DLL files
